@@ -31,4 +31,4 @@ To enhance the business value, I am currently building:
 3.  **Inventory Forecasting:** Using historical sales data to predict material needs.
 
 ---
-*Developed by [Your Name]*
+*Developed by Flawiya S. More*
