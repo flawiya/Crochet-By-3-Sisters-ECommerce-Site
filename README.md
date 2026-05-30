@@ -1,8 +1,7 @@
 # Crochet by 3 Sisters 🧶
+Project focus: Full-Stack Web Development, UI/UX Design, Payment Integration.
 
-<!-- This is the "Work in Progress" Badge -->
-![Status](https://img.shields.io/badge/Status-Work_in_Progress-orange?style=flat-square&logo=git&logoColor=white)
-[![Website Status](https://img.shields.io/website?url=https%3A%2F%2FOystr97.github.io%2Fcrochet-by-3-sisters&label=Shop&style=flat-square)](https://Oystr97.github.io/crochet-by-3-sisters)
+![alt text](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![alt text](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![alt text](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black) ![alt text](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![alt text](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![alt text](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![alt text](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![alt text](https://img.shields.io/badge/Stripe-5433FF?style=for-the-badge&logo=stripe&logoColor=white)
 
 > A responsive e-commerce front-end designed to digitize inventory for a local business.
 
