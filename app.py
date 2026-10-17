@@ -57,7 +57,7 @@ def makers():
 @app.route('/<category>')
 def show_products(category):
     cat_clean = category.lower().strip()
-    valid_categories = ['earrings', 'bracelets', 'keychains', 'flowers']
+    valid_categories = ['earrings', 'bracelets', 'keychains', 'flowers', 'accessories']
     
     if cat_clean not in valid_categories:
         # Fallback if someone hits an unknown URL
@@ -88,7 +88,8 @@ def show_products(category):
         'earrings': 'Handcrafted Earrings',
         'bracelets': 'Artisan Bracelets',
         'keychains': 'Crochet Keychains',
-        'flowers': 'Flowers & Home Decor'
+        'flowers': 'Flowers & Home Decor',
+        'accessories': 'Hair & Fashion Accessories'
     }
 
     return render_template(
@@ -385,11 +386,11 @@ def login():
 
         if user and check_password_hash(user['password'], password):
             session['user'] = user['email']
-            session['is_admin'] = (user['email'] == "crochetby3sisters@gmail.com" or user['contact'] == "+917769829920")
+            session['is_admin'] = (user['email'] in ["crochetby3sisters@gmail.com", "flavia.more.fm@gmail.com"])
             flash("Logged in successfully!")
             return redirect('/')
         else:
-            flash("Invalid credentials. Please check your email/phone and password.")
+            flash("Invalid credentials. Please check your email and password.")
             return redirect('/login')
 
     return render_template('login.html')
