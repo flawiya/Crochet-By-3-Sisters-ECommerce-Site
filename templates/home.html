@@ -55,34 +55,11 @@
         border-radius: 12px;
     }
 
-    /* 👇 Icons at top-right corner */
-    .icon-fixed-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .icon-fixed-container img {
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
+    .categories a:hover img {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(214, 51, 132, 0.25);
     }
 </style>
-
-<!-- ✅ Top-right icons: Login, Create Account & Your Cart -->
-<div class="icon-fixed-container">
-    <a href="/signup">
-        <img src="{{ url_for('static', filename='account.png') }}" alt="Create Account">
-    </a>
-    <a href="/cart">
-        <img src="{{ url_for('static', filename='cart.png') }}" alt="Your Cart">
-    </a>
-</div>
 
 <div class="homepage">
     <div class="section">

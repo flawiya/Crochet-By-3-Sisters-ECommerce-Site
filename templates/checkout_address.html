@@ -1,14 +1,114 @@
-<h2>Shipping Details</h2>
-<form method="POST">
-    <label>Name:</label><br>
-    <input type="text" name="name" value="{{ user.name }}" required><br><br>
+{% extends "base.html" %}
 
-    <label>Contact (+91...):</label><br>
-    <input type="text" name="contact" value="{{ user.contact }}" required><br><br>
+{% block title %}Checkout - Shipping Details - Crochet by 3 Sisters{% endblock %}
 
-    <label>Address:</label><br>
-    <textarea name="address" required>{{ user.address }}</textarea><br><br>
+{% block content %}
+<style>
+    .checkout-wrap {
+        max-width: 650px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        padding: 35px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
 
-    <p><strong>Note:</strong> Delivery may take 10–15 days. For faster delivery, WhatsApp: +919665595513</p>
-    <button type="submit">Proceed to Payment</button>
-</form>
+    .checkout-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--primary-rose);
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #4a5568;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--card-border);
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-rose);
+    }
+
+    .btn-submit-order {
+        width: 100%;
+        padding: 14px;
+        background: var(--primary-rose);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 15px;
+    }
+
+    .btn-submit-order:hover {
+        background: var(--dark-rose);
+    }
+
+    .shipping-note {
+        background: #fdf2f8;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        color: var(--dark-rose);
+        margin-top: 20px;
+        line-height: 1.5;
+    }
+</style>
+
+<div class="checkout-wrap">
+    <h1 class="checkout-title">Shipping & Contact Details</h1>
+
+    <form method="POST">
+        <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" name="name" class="form-control" value="{% if user %}{{ user['name'] }}{% endif %}" placeholder="e.g. Flawiya More" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Mobile Number (WhatsApp preferred) *</label>
+            <input type="tel" name="contact" class="form-control" value="{% if user %}{{ user['contact'] }}{% endif %}" placeholder="e.g. +91 77698 29920" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email Address (for order receipts) *</label>
+            <input type="email" name="email" class="form-control" value="{% if user %}{{ user['email'] }}{% endif %}" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Complete Shipping Address *</label>
+            <textarea name="address" class="form-control" rows="3" placeholder="House/Flat number, Street, Landmark, City, State, Pincode / Postal Code" required>{% if user %}{{ user['address'] }}{% endif %}</textarea>
+        </div>
+
+        <div class="shipping-note">
+            📦 <strong>Handcrafted with Care:</strong> Because each item is hand-crocheted by our team, orders are carefully packed and dispatched within 2–3 days. For priority dispatch, message us directly on WhatsApp!
+        </div>
+
+        <button type="submit" class="btn-submit-order">Continue to Payment →</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -3,19 +3,239 @@
 {% block title %}{{ category }} - Crochet by 3 Sisters{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-2xl font-semibold mb-4">{{ category }}</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {% for product in products %}
-        <div class="border rounded-xl p-4 shadow-md hover:shadow-lg transition">
-            <div class="text-center font-semibold text-lg mb-2">{{ product.name }}</div>
-            <img src="{{ product.images.split(',')[0] }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-lg">
-            <div class="text-center mt-2 font-medium text-green-700">{{ product.display_price }}</div>
-            <form action="/product/{{ product.id }}" method="get" class="mt-3 text-center">
-                <button class="bg-pink-600 text-white px-4 py-1 rounded-full hover:bg-pink-700">View Details</button>
-            </form>
-        </div>
-        {% endfor %}
-    </div>
+<style>
+    .category-hero {
+        text-align: center;
+        margin-bottom: 35px;
+        padding: 30px 20px;
+        background: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(214, 51, 132, 0.05);
+    }
+
+    .category-hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--primary-rose);
+        margin: 0 0 10px 0;
+    }
+
+    .category-hero p {
+        color: var(--text-muted);
+        font-size: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 25px;
+    }
+
+    .product-card {
+        background: #ffffff;
+        border: 1px solid #f3e8ee;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        position: relative;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(214, 51, 132, 0.12);
+        border-color: var(--card-border);
+    }
+
+    .card-img-link {
+        display: block;
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+        background: #fdf2f8;
+    }
+
+    .card-img-link img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .card-img-link img {
+        transform: scale(1.05);
+    }
+
+    .badge-handcrafted {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark-rose);
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+        padding: 18px 16px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .product-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 0 0 6px 0;
+        line-height: 1.35;
+    }
+
+    .product-title a {
+        text-decoration: none;
+        color: #2d3748;
+        transition: color 0.2s;
+    }
+
+    .product-title a:hover {
+        color: var(--primary-rose);
+    }
+
+    .rating-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.85rem;
+        color: var(--accent-gold);
+        margin-bottom: 8px;
+    }
+
+    .rating-count {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+    }
+
+    .material-snip {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px dashed #f3e8ee;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-rose);
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .btn-details {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px solid var(--card-border);
+        background: #ffffff;
+        color: var(--primary-rose);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-details:hover {
+        background: #fdf2f8;
+        border-color: var(--primary-rose);
+    }
+
+    .btn-quick-add {
+        flex: 1;
+        padding: 8px 10px;
+        border: none;
+        background: var(--primary-rose);
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-quick-add:hover {
+        background: var(--dark-rose);
+    }
+</style>
+
+<div class="category-hero">
+    <h1>{{ category }}</h1>
+    <p>Hand-knitted with organic cotton yarn, precision stitches, and genuine passion. Choose your favorite piece or customize a gift set.</p>
 </div>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <a href="/product/{{ product.id }}" class="card-img-link">
+            <span class="badge-handcrafted">✨ 100% Handcrafted</span>
+            <img src="{{ url_for('static', filename=product.image_filename) }}" alt="{{ product.name }}">
+        </a>
+
+        <div class="card-body">
+            <h3 class="product-title">
+                <a href="/product/{{ product.id }}">{{ product.name }}</a>
+            </h3>
+
+            <div class="rating-row">
+                <span>★ {{ product.rating }}</span>
+                <span class="rating-count">({{ product.rating_count }} reviews)</span>
+            </div>
+
+            <div class="material-snip">
+                🧶 {{ product.material }}
+            </div>
+
+            <div class="price-row">
+                <div class="product-price">{{ product.display_price }}</div>
+            </div>
+
+            <div class="card-actions">
+                <a href="/product/{{ product.id }}" class="btn-details">View Details</a>
+                <form action="/add_to_cart" method="POST" style="flex:1; margin:0;">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn-quick-add">+ Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

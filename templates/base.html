@@ -2,84 +2,319 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Crochet by 3 Sisters{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Crochet by 3 Sisters - Artisan Handcrafted Crochet{% endblock %}</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <!-- External CSS file -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-    <!-- Custom Styles -->
     <style>
-        /* Sidebar styling */
-        .sidebar a, .sidebar h3 {
-            color: #a62264 !important;
+        :root {
+            --primary-rose: #d63384;
+            --dark-rose: #a62264;
+            --soft-pink: #fdf2f8;
+            --card-border: #fbcfe8;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --accent-gold: #f59e0b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #faf5f8;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar */
+        .site-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-rose);
+        }
+
+        .brand-logo-wrap img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .brand-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-rose);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .country-select {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            background: white;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .cart-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-rose);
+            color: white !important;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+            box-shadow: 0 3px 10px rgba(214, 51, 132, 0.3);
         }
 
-        .sidebar a:hover {
-            color: #d63384 !important;
+        .cart-pill:hover {
+            background: var(--dark-rose);
         }
 
-        /* Footer styling */
-        .footer-address {
-            font-size: 15px;
-            color: #d63384;
+        .badge-count {
+            background: white;
+            color: var(--primary-rose);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .user-link {
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
-        .footer-logo {
-            width: 100px;
-            margin-bottom: 10px;
-            border-radius: 12px;
+        .user-link:hover {
+            color: var(--primary-rose);
         }
 
-        /* Main content styling */
-        .content h1, .content h2, .content p.highlight {
-            color: #d63384;
-            font-weight: 600;
+        /* Flash Message Banner */
+        .flash-container {
+            max-width: 1200px;
+            margin: 15px auto 0 auto;
+            padding: 0 20px;
         }
 
-        .content p.tagline {
-            color: #000000;
+        .flash-message {
+            background: #fdf2f8;
+            border-left: 4px solid var(--primary-rose);
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: var(--dark-rose);
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+
+        /* Main Content wrapper */
+        .main-wrapper {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 25px 20px 60px 20px;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #ffffff;
+            border-top: 1px solid var(--card-border);
+            padding: 40px 20px 20px 20px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--primary-rose);
+            margin-bottom: 12px;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin: 6px 0;
+        }
+
+        .footer-links {
+            margin: 16px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--primary-rose);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- ✅ Country Selector Dropdown — ONLY visible on home page -->
-{% if request.path == '/' %}
-<div style="text-align: right; padding: 10px; background-color: transparent;">
-    <form action="/set_country" method="POST" style="display: inline;">
-        <select name="country" onchange="this.form.submit()" style="padding: 5px; border-radius: 6px;">
-            <option value="India" {% if session.country == 'India' %}selected{% endif %}>🇮🇳 India</option>
-            <option value="UK" {% if session.country == 'UK' %}selected{% endif %}>🇬🇧 UK</option>
-        </select>
-    </form>
-</div>
-{% endif %}
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="/" class="brand-logo-wrap">
+                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Crochet by 3 Sisters Logo">
+                <span class="brand-title">Crochet by 3 Sisters</span>
+            </a>
 
-<!-- ✅ Sidebar and thank you image — shown on all pages EXCEPT home -->
-{% if request.path != '/' %}
-<div class="sidebar">
-    <a href="/">Home</a>
-    <h3 style="font-size: 1.2rem; text-align: center;">Our Creations</h3>
-    <a href="/earrings">Earrings</a>
-    <a href="/bracelets">Bracelets</a>
-    <a href="/keychains">Keychains</a>
-    <a href="/flowers">Flowers</a>
-</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/earrings">Earrings</a></li>
+                    <li><a href="/bracelets">Bracelets</a></li>
+                    <li><a href="/keychains">Keychains</a></li>
+                    <li><a href="/flowers">Flowers & Decor</a></li>
+                    <li><a href="/makers">Meet the Makers</a></li>
+                </ul>
+            </nav>
 
-<div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 999; text-align: center;">
-    <img src="{{ url_for('static', filename='thank you.jpg') }}" alt="Thank You" style="width: 100px; opacity: 0.9;">
-</div>
-{% endif %}
+            <div class="nav-actions">
+                <!-- Country Selector -->
+                <form action="/set_country" method="POST" style="margin:0;">
+                    <select name="country" class="country-select" onchange="this.form.submit()">
+                        <option value="India" {% if current_country == 'India' %}selected{% endif %}>🇮🇳 India (₹)</option>
+                        <option value="UK" {% if current_country == 'UK' %}selected{% endif %}>🇬🇧 UK (£)</option>
+                    </select>
+                </form>
 
-<!-- Main content block for individual pages -->
-<div class="content">
-    {% block content %}{% endblock %}
-</div>
+                <!-- Cart Button with Counter -->
+                <a href="/cart" class="cart-pill">
+                    <span>🛒</span> Cart
+                    <span class="badge-count">{{ cart_count }}</span>
+                </a>
+
+                {% if session.get('user') %}
+                    <a href="/logout" class="user-link">Logout</a>
+                {% else %}
+                    <a href="/login" class="user-link">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash message alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Page Content -->
+    <main class="main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-tagline">✨ Three Sisters. Three Mums. One Dream. ✨</div>
+        <p class="footer-text">Each piece is lovingly handcrafted stitch-by-stitch using premium, eco-friendly cotton yarns.</p>
+        <div class="footer-links">
+            <a href="/earrings">Earrings</a>
+            <a href="/bracelets">Bracelets</a>
+            <a href="/keychains">Keychains</a>
+            <a href="/flowers">Flowers</a>
+            <a href="/makers">Our Story</a>
+            <a href="/cart">Shopping Cart</a>
+        </div>
+        <p class="footer-text">Need custom designs or bulk orders? WhatsApp: <strong>+91 77698 29920</strong> / <strong>+91 96655 95513</strong></p>
+        <p class="footer-text" style="font-size:0.8rem; margin-top:15px;">© 2026 Crochet by 3 Sisters. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>

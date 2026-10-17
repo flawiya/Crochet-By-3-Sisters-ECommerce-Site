@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed! - Crochet by 3 Sisters{% endblock %}
+
+{% block content %}
+<style>
+    .success-card {
+        max-width: 620px;
+        margin: 30px auto;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 6px 25px rgba(214, 51, 132, 0.1);
+    }
+
+    .success-icon {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+    }
+
+    .success-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--primary-rose);
+        margin: 0 0 10px 0;
+    }
+
+    .order-pill {
+        display: inline-block;
+        background: #fdf2f8;
+        border: 1px dashed var(--primary-rose);
+        color: var(--dark-rose);
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin: 15px 0 25px 0;
+    }
+
+    .thank-you-img {
+        width: 140px;
+        margin: 15px auto;
+        display: block;
+        border-radius: 12px;
+    }
+
+    .next-steps-box {
+        background: #fafafc;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: left;
+        font-size: 0.92rem;
+        color: #4a5568;
+        line-height: 1.6;
+        margin: 20px 0;
+        border: 1px solid #edf2f7;
+    }
+
+    .btn-return-home {
+        display: inline-block;
+        padding: 12px 30px;
+        background: var(--primary-rose);
+        color: white;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+
+    .btn-return-home:hover {
+        background: var(--dark-rose);
+    }
+</style>
+
+<div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h1 class="success-title">Thank You for Your Order!</h1>
+    <p style="color:#718096;">Your order has been recorded and submitted to our artisan workshop.</p>
+
+    <div class="order-pill">Order Reference: {{ order_id }}</div>
+
+    <img src="{{ url_for('static', filename='thank you.jpg') }}" alt="Thank you for shopping" class="thank-you-img">
+
+    <div class="next-steps-box">
+        <div>✔️ <strong>Payment Ref:</strong> <code>{{ txn_id }}</code></div>
+        <div>🧶 <strong>Crafting & Dispatch:</strong> We will verify your transaction and begin handcrafting/packaging your order immediately.</div>
+        <div>📦 <strong>Shipping Updates:</strong> Tracking details will be dispatched to your contact number within 24–48 hours.</div>
+        <div>💬 <strong>Direct Support:</strong> Have questions? Reach out directly on WhatsApp at <strong>+91 77698 29920</strong> mentioning your Order ID!</div>
+    </div>
+
+    <a href="/" class="btn-return-home">← Back to Shop</a>
+</div>
+
+{% endblock %}

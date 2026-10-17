@@ -1,26 +1,139 @@
 {% extends "base.html" %}
+
+{% block title %}Complete Payment - Crochet by 3 Sisters{% endblock %}
+
 {% block content %}
+<style>
+    .payment-card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        padding: 35px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        text-align: center;
+    }
 
-<div style="max-width: 600px; margin: auto; text-align: center;">
-    <h2>Payment</h2>
+    .payment-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--primary-rose);
+        margin-bottom: 8px;
+    }
 
-    {{% if country == 'UK' %}
-    <p>Total Amount: £{{ '%.2f' % total }}</p>
-    <p>Scan this QR to pay in GBP:</p>
-    <img src="{{ url_for('static', filename='uk_qr.png') }}" alt="UK QR" style="width:200px;">
-{% else %}
-    <p>Total Amount: ₹{{ total }}</p>
-    <p>Scan this QR to pay using UPI:</p>
-    <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="Dynamic UPI QR" style="width:200px;"><br><br>
+    .total-badge {
+        display: inline-block;
+        background: #fdf2f8;
+        border: 1px dashed var(--primary-rose);
+        padding: 10px 24px;
+        border-radius: 30px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--dark-rose);
+        margin: 15px 0 25px 0;
+    }
 
-    <strong>UPI ID:</strong> <code>flaviya@okaxis</code><br>
-    <strong>Google Pay No.:</strong> <code>9876543210</code>
-{% endif %}
+    .qr-frame {
+        background: #fff5f8;
+        border: 2px solid var(--card-border);
+        border-radius: 16px;
+        padding: 20px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
 
-    <form action="/payment_success" method="POST" style="margin-top: 30px;">
-        <label for="upi_txn">Enter Transaction ID:</label><br>
-        <input type="text" id="upi_txn" name="upi_txn" required><br><br>
-        <button type="submit">Submit Payment</button>
+    .qr-frame img {
+        width: 220px;
+        height: 220px;
+        object-fit: contain;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 10px;
+    }
+
+    .payment-details {
+        text-align: left;
+        background: #fdfafc;
+        border-radius: 12px;
+        padding: 18px 22px;
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        border: 1px solid #f3e8ee;
+    }
+
+    .txn-input {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        font-size: 1rem;
+        text-align: center;
+        margin-bottom: 18px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .txn-input:focus {
+        border-color: var(--primary-rose);
+    }
+
+    .btn-confirm-payment {
+        width: 100%;
+        padding: 15px;
+        background: var(--primary-rose);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        box-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);
+    }
+
+    .btn-confirm-payment:hover {
+        background: var(--dark-rose);
+    }
+</style>
+
+<div class="payment-card">
+    <h1 class="payment-title">Scan & Pay</h1>
+    <p style="color:#718096; margin-bottom:10px;">Fast, secure checkout directly to our artisan workshop.</p>
+
+    <div class="total-badge">Amount Due: {{ total_display }}</div>
+
+    {% if country == 'UK' %}
+    <div class="qr-frame">
+        <img src="{{ url_for('static', filename='QR code.jpg') }}" alt="Payment QR">
+    </div>
+    <div class="payment-details">
+        <div>💷 <strong>Currency:</strong> British Pounds (GBP)</div>
+        <div>🏦 <strong>Bank Transfer / Faster Payments:</strong></div>
+        <div>• Account Name: <code>Crochet by 3 Sisters</code></div>
+        <div>• Reference: <code>Your Full Name</code></div>
+        <div>• International Transfer: Scan QR above or contact via WhatsApp</div>
+    </div>
+    {% else %}
+    <div class="qr-frame">
+        <img src="{{ url_for('static', filename='QR code.jpg') }}" alt="UPI Payment QR Code">
+    </div>
+    <div class="payment-details">
+        <div>📱 <strong>UPI Apps:</strong> Google Pay, PhonePe, Paytm, BHIM</div>
+        <div>💳 <strong>UPI ID:</strong> <code>crochetby3sisters@okaxis</code></div>
+        <div>📞 <strong>Registered Mobile:</strong> <code>+91 77698 29920</code></div>
+        <div style="margin-top:6px; color:#718096; font-size:0.85rem;">* Scan the QR code above or pay directly using the UPI ID</div>
+    </div>
+    {% endif %}
+
+    <form action="/payment_success" method="POST">
+        <label style="display:block; text-align:left; font-weight:600; font-size:0.9rem; color:#4a5568; margin-bottom:6px;">
+            Enter UPI Reference / Transaction UTR No. *
+        </label>
+        <input type="text" name="upi_txn" class="txn-input" placeholder="e.g. 423589201847 or Bank Ref" required>
+
+        <button type="submit" class="btn-confirm-payment">Submit & Confirm Order ✓</button>
     </form>
 </div>
 

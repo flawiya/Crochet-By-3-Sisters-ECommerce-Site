@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Crochet by 3 Sisters{% endblock %}
+
+{% block content %}
+<style>
+    .breadcrumb-nav {
+        margin-bottom: 25px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .breadcrumb-nav a {
+        color: var(--primary-rose);
+        text-decoration: none;
+    }
+
+    .breadcrumb-nav a:hover {
+        text-decoration: underline;
+    }
+
+    .detail-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 35px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    /* Left Gallery */
+    .gallery-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-image-box {
+        width: 100%;
+        height: 420px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fdf2f8;
+        border: 1px solid #f3e8ee;
+        position: relative;
+    }
+
+    .main-image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .thumbnail-row {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+
+    .thumb-btn {
+        width: 75px;
+        height: 75px;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        overflow: hidden;
+        cursor: pointer;
+        padding: 0;
+        background: #fdf2f8;
+        transition: border-color 0.2s, transform 0.2s;
+        flex-shrink: 0;
+    }
+
+    .thumb-btn.active, .thumb-btn:hover {
+        border-color: var(--primary-rose);
+        transform: scale(1.05);
+    }
+
+    .thumb-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .video-section {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px dashed var(--card-border);
+    }
+
+    .video-section h4 {
+        font-size: 0.95rem;
+        color: var(--dark-rose);
+        margin: 0 0 10px 0;
+    }
+
+    .video-section video {
+        width: 100%;
+        max-height: 250px;
+        border-radius: 12px;
+        outline: none;
+    }
+
+    /* Right Details */
+    .product-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-badge {
+        display: inline-block;
+        background: #fdf2f8;
+        color: var(--dark-rose);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+        align-self: flex-start;
+    }
+
+    .detail-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        line-height: 1.25;
+        color: #2d3748;
+        margin: 0 0 10px 0;
+    }
+
+    .detail-rating {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-gold);
+        font-size: 0.95rem;
+        margin-bottom: 18px;
+    }
+
+    .detail-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-rose);
+        margin-bottom: 20px;
+    }
+
+    .detail-desc {
+        color: #4a5568;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f3e8ee;
+    }
+
+    .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+        font-size: 0.9rem;
+    }
+
+    .specs-table td {
+        padding: 8px 12px;
+        border-bottom: 1px solid #f7fafc;
+    }
+
+    .specs-table td.spec-label {
+        font-weight: 600;
+        color: #718096;
+        width: 35%;
+    }
+
+    .specs-table td.spec-val {
+        color: #2d3748;
+    }
+
+    .cart-action-box {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .qty-select {
+        padding: 12px 16px;
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+        background: white;
+    }
+
+    .btn-add-cart-large {
+        flex: 1;
+        padding: 14px 24px;
+        background: var(--primary-rose);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        box-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);
+    }
+
+    .btn-add-cart-large:hover {
+        background: var(--dark-rose);
+        transform: translateY(-2px);
+    }
+
+    .assurance-box {
+        background: #fdf2f8;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 0.85rem;
+        color: var(--dark-rose);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    /* Related section */
+    .related-wrap {
+        margin-top: 50px;
+    }
+
+    .related-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        color: var(--primary-rose);
+        margin-bottom: 20px;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .related-card {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        overflow: hidden;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s;
+    }
+
+    .related-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .related-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 850px) {
+        .detail-container {
+            grid-template-columns: 1fr;
+        }
+        .main-image-box {
+            height: 320px;
+        }
+    }
+</style>
+
+<div class="breadcrumb-nav">
+    <a href="/">Home</a> &gt; 
+    <a href="/{{ product.category }}">{{ product.category|capitalize }}</a> &gt; 
+    <span>{{ product.name }}</span>
+</div>
+
+<div class="detail-container">
+    <!-- Gallery -->
+    <div class="gallery-wrap">
+        <div class="main-image-box">
+            <img id="mainImage" src="{{ url_for('static', filename=product.primary_image) }}" alt="{{ product.name }}">
+        </div>
+
+        {% if product.gallery_images|length > 1 %}
+        <div class="thumbnail-row">
+            {% for img in product.gallery_images %}
+            <button class="thumb-btn {% if loop.first %}active{% endif %}" onclick="changeImage('{{ url_for('static', filename=img) }}', this)">
+                <img src="{{ url_for('static', filename=img) }}" alt="Thumbnail {{ loop.index }}">
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if product.video_filename %}
+        <div class="video-section">
+            <h4>🎥 Product Showcase Video</h4>
+            <video controls>
+                <source src="{{ url_for('static', filename=product.video_filename) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-info">
+        <span class="category-badge">✨ {{ product.category|capitalize }}</span>
+        <h1 class="detail-title">{{ product.name }}</h1>
+
+        <div class="detail-rating">
+            <span>★★★★★ {{ product.rating }}</span>
+            <span style="color:#a0aec0;">• ({{ product.rating_count }} verified reviews)</span>
+        </div>
+
+        <div class="detail-price">{{ product.display_price }}</div>
+
+        <p class="detail-desc">{{ product.description }}</p>
+
+        <!-- Specifications -->
+        <table class="specs-table">
+            <tr>
+                <td class="spec-label">🧶 Material:</td>
+                <td class="spec-val">{{ product.material }}</td>
+            </tr>
+            <tr>
+                <td class="spec-label">📐 Dimensions:</td>
+                <td class="spec-val">
+                    {% if product.length %}{{ product.length }} (L){% endif %}
+                    {% if product.width %} × {{ product.width }} (W){% endif %}
+                    {% if product.height %} × {{ product.height }} (H){% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="spec-label">⚖️ Approx. Weight:</td>
+                <td class="spec-val">{{ product.weight }}</td>
+            </tr>
+            <tr>
+                <td class="spec-label">🌿 Care Instructions:</td>
+                <td class="spec-val">Gently hand-wash with mild detergent; air-dry flat. Do not machine tumble.</td>
+            </tr>
+        </table>
+
+        <!-- Add to Cart Form -->
+        <form action="/add_to_cart" method="POST">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <div class="cart-action-box">
+                <select name="quantity" class="qty-select">
+                    {% for q in range(1, 11) %}
+                    <option value="{{ q }}">Qty: {{ q }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn-add-cart-large">🛒 Add to Cart</button>
+            </div>
+        </form>
+
+        <div class="assurance-box">
+            <div>✔️ <strong>Handmade to Order:</strong> Stitched with love by our 3 mum artisans.</div>
+            <div>🚚 <strong>Shipping:</strong> Dispatched in 2–3 business days with tracking.</div>
+            <div>🎁 <strong>Gift Packaging:</strong> Comes in our signature branded cotton gift pouch.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Related Creations -->
+{% if related %}
+<div class="related-wrap">
+    <h3 class="related-title">More in {{ product.category|capitalize }}</h3>
+    <div class="related-grid">
+        {% for r in related %}
+        <a href="/product/{{ r.id }}" class="related-card">
+            <img src="{{ url_for('static', filename=r.image_filename) }}" alt="{{ r.name }}">
+            <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">{{ r.name }}</div>
+            <div style="color:var(--primary-rose); font-weight:700;">{{ r.display_price }}</div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<script>
+    function changeImage(newSrc, btn) {
+        document.getElementById('mainImage').src = newSrc;
+        document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+</script>
+
+{% endblock %}
