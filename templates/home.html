@@ -70,11 +70,93 @@
     <div class="section">
         <h2 style="text-align: center;">Explore our collection!</h2>
         <div class="categories">
-            <div><a href="/earrings"><img src="{{ url_for('static', filename='earrings.jpg') }}"><br>Earrings</a></div>
-            <div><a href="/bracelets"><img src="{{ url_for('static', filename='daisy_friendship_bracelet.jpg') }}"><br>Bracelets</a></div>
-            <div><a href="/keychains"><img src="{{ url_for('static', filename='cherry_keychain_lace_1.jpeg') }}"><br>Keychains</a></div>
-            <div><a href="/accessories"><img src="{{ url_for('static', filename='mogra_rose_gajra_heart.jpeg') }}"><br>Hair Accessories</a></div>
-            <div><a href="/flowers"><img src="{{ url_for('static', filename='tulip_placemat_1.jpeg') }}"><br>Flowers & Decor</a></div>
+            <div><a href="/earrings"><img src="{{ url_for('static', filename='beautified_pink_floral_hoops.jpg') }}"><br>Earrings</a></div>
+            <div><a href="/bracelets"><img src="{{ url_for('static', filename='beautified_daisy_bracelet.jpg') }}"><br>Bracelets</a></div>
+            <div><a href="/keychains"><img src="{{ url_for('static', filename='beautified_cherry_keychain_1.jpg') }}"><br>Keychains</a></div>
+            <div><a href="/accessories"><img src="{{ url_for('static', filename='beautified_mogra_rose_gajra_heart.jpg') }}"><br>Hair Accessories</a></div>
+            <div><a href="/flowers"><img src="{{ url_for('static', filename='beautified_tulip_placemat.jpg') }}"><br>Flowers & Decor</a></div>
+        </div>
+    </div>
+
+    <!-- ⭐ Customer Love & Reviews Section -->
+    <div class="section reviews-section" style="text-align: left; max-width: 1050px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <span style="background: #fce7f3; color: #d63384; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 6px 14px; border-radius: 20px;">Customer Love</span>
+            <h2 style="margin: 12px 0 6px 0; color: #d63384; font-size: 2rem;">Loved by Handcraft Enthusiasts</h2>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; color: #f59e0b; font-size: 1.1rem;">
+                <span>★★★★★</span>
+                <span style="color: #4b5563; font-size: 0.95rem; font-weight: 600;">4.9 / 5.0 rating across 150+ happy orders</span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Review 1 -->
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(214, 51, 132, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="color: #f59e0b; font-size: 1rem; margin-bottom: 8px;">★★★★★</div>
+                    <p style="font-size: 0.95rem; color: #374151; line-height: 1.6; margin: 0 0 16px 0; font-style: italic;">
+                        "The Mogra Gajra looked absolutely breathtaking in my hair for Diwali! The jasmine stitch design and soft petals made me feel so connected to tradition. Everyone at the festival asked where I found it!"
+                    </p>
+                </div>
+                <div style="border-top: 1px solid #f3e8ee; padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: #111827; font-size: 0.92rem; display: block;">Aisha K.</strong>
+                        <span style="color: #9ca3af; font-size: 0.8rem;">London, UK • Verified Buyer</span>
+                    </div>
+                    <span style="background: #ecfdf5; color: #059669; font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 12px;">Mogra Gajra</span>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(214, 51, 132, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="color: #f59e0b; font-size: 1rem; margin-bottom: 8px;">★★★★★</div>
+                    <p style="font-size: 0.95rem; color: #374151; line-height: 1.6; margin: 0 0 16px 0; font-style: italic;">
+                        "I ordered the Pink Floral Crochet Hoops and Daisy Friendship Bracelet. They are so featherlight on the ears and the yarn texture is exquisite. You can genuinely feel the craftsmanship and love in every stitch!"
+                    </p>
+                </div>
+                <div style="border-top: 1px solid #f3e8ee; padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: #111827; font-size: 0.92rem; display: block;">Sophie M.</strong>
+                        <span style="color: #9ca3af; font-size: 0.8rem;">Liverpool, UK • Verified Buyer</span>
+                    </div>
+                    <span style="background: #ecfdf5; color: #059669; font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 12px;">Floral Hoops</span>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(214, 51, 132, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="color: #f59e0b; font-size: 1rem; margin-bottom: 8px;">★★★★★</div>
+                    <p style="font-size: 0.95rem; color: #374151; line-height: 1.6; margin: 0 0 16px 0; font-style: italic;">
+                        "The handmade Tulip placemat and citrus coasters turned our dining table into an Instagram dream. High quality, washable, and such a thoughtful housewarming present. Beautiful eco packaging too!"
+                    </p>
+                </div>
+                <div style="border-top: 1px solid #f3e8ee; padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: #111827; font-size: 0.92rem; display: block;">Priya R.</strong>
+                        <span style="color: #9ca3af; font-size: 0.8rem;">Manchester, UK • Verified Buyer</span>
+                    </div>
+                    <span style="background: #ecfdf5; color: #059669; font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 12px;">Dining Decor</span>
+                </div>
+            </div>
+
+            <!-- Review 4 -->
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(214, 51, 132, 0.05); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="color: #f59e0b; font-size: 1rem; margin-bottom: 8px;">★★★★★</div>
+                    <p style="font-size: 0.95rem; color: #374151; line-height: 1.6; margin: 0 0 16px 0; font-style: italic;">
+                        "Bought the sweet cherry keychain and kitten plushie charm for my daughter's backpack. The details are adorable, stitchwork is super tight, and they withstand daily use brilliantly. Will definitely order again!"
+                    </p>
+                </div>
+                <div style="border-top: 1px solid #f3e8ee; padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <strong style="color: #111827; font-size: 0.92rem; display: block;">Emily T.</strong>
+                        <span style="color: #9ca3af; font-size: 0.8rem;">Edinburgh, UK • Verified Buyer</span>
+                    </div>
+                    <span style="background: #ecfdf5; color: #059669; font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 12px;">Keychains</span>
+                </div>
+            </div>
         </div>
     </div>
 
